@@ -1,30 +1,37 @@
 "use client";
 import { builder, Builder } from "@builder.io/react";
-import Counter from "./components/Counter/Counter";
-import { CustomMDX } from "./app/components/mdx";
-import Footer from "./app/components/footer";
 import { Navbar } from "./app/components/nav";
 
 builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY!);
 
-Builder.registerComponent(Counter, {
-  name: "Counter",
-  inputs: [
-    {
-      name: "initialCount",
-      type: "number",
-    },
-  ],
-});
+const navInputs = [
+  {
+    name: "navItems",
+    type: "list",
+    subFields: [
+      {
+        name: "path",
+        type: "string",
+        defaultValue: "/",
+      },
+      {
+        name: "name",
+        type: "string",
+        defaultValue: "home",
+      },
+    ],
+    defaultValue: [
+      { path: "/", name: "home" },
+      { path: "/blog", name: "blog" },
+      {
+        path: "https://vercel.com/templates/next.js/portfolio-starter-kit",
+        name: "deploy",
+      },
+    ],
+  },
+];
 
 Builder.registerComponent(Navbar, {
   name: "Navbar",
-});
-
-Builder.registerComponent(CustomMDX, {
-  name: "CustomMDX",
-});
-
-Builder.registerComponent(Footer, {
-  name: "Footer",
+  inputs: navInputs,
 });
